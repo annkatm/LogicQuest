@@ -5,7 +5,18 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Zap, Lock, Mail } from 'lucide-react';
+
+const Lock = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+);
+
+const Mail = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+);
+
+const ArrowRight = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+);
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -23,124 +34,117 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <GuestLayout>
+        <div className="min-h-screen bg-[#050b1a] text-slate-200 relative overflow-hidden font-sans flex flex-col justify-center items-center px-6">
             <Head title="Log in" />
 
-            <div className="min-h-screen bg-white text-slate-900 relative">
-                {/* Background soft accents */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-indigo-50/50 rounded-full blur-3xl -z-0" />
+            {/* Background Glows - Matching the Welcome style */}
+            <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] -z-0" />
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-cyan-500/5 rounded-full blur-[100px] -z-0" />
 
-                <div className="relative z-10 flex flex-col items-center justify-center px-6 py-12">
+            {/* Logo Link back to Welcome */}
+            <Link href="/" className="relative z-10 flex items-center gap-2 mb-8 group">
+                <span className="text-2xl font-bold tracking-tight text-white">LogicQuest</span>
+            </Link>
 
-                    {/* Header/Logo Section */}
-                    <div className="mb-8 text-center">
-                        {/* <div className="inline-flex w-12 h-12 rounded-xl bg-indigo-600 items-center justify-center shadow-lg shadow-indigo-200 mb-4">
-                            <Zap className="w-7 h-7 text-white" />
-                        </div> */}
-                        <h1 className="text-3xl font-bold tracking-tight text-slate-900">Welcome Back</h1>
-                        <p className="text-slate-500 mt-2">Log in to continue your streak.</p>
+            <div className="relative z-10 w-full max-w-md">
+                {/* Status Message */}
+                {status && (
+                    <div className="mb-4 text-sm font-medium text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 p-3 rounded-lg">
+                        {status}
                     </div>
+                )}
 
-                    {/* Login Card */}
-                    <div className="w-full max-w-md bg-white border border-slate-100 rounded-2xl p-8 shadow-xl shadow-slate-100">
+                <div className="p-[1px] rounded-3xl bg-gradient-to-b from-blue-500/30 to-transparent shadow-2xl">
+                    <div className="bg-[#0a101f] border border-blue-900/30 rounded-[calc(1.5rem-1px)] p-8">
+                        <div className="mb-8 text-center">
+                            <h1 className="text-2xl font-bold text-white">Welcome back</h1>
+                            <p className="text-slate-400 text-sm mt-1">Log in to continue your streak</p>
+                        </div>
 
-                        {status && (
-                            <div className="mb-4 text-sm font-medium text-green-600 bg-green-50 p-3 rounded-lg border border-green-100">
-                                {status}
-                            </div>
-                        )}
-
-                        {status && (
-                            <div className="mb-4 text-sm font-medium text-green-600">
-                                {status}
-                            </div>
-                        )}
-
-                        <form onSubmit={submit} className="space-y-5">
-                            <div>
-                                <InputLabel htmlFor="email" value="Email" className="text-slate-700 font-medium mb-1" />
-                                <div className="relative">
-
-                                    <TextInput
-                                        id="email"
-                                        type="email"
-                                        name="email"
-                                        value={data.email}
-                                        className="mt-1 block w-full border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg"
-                                        autoComplete="username"
-                                        isFocused={true}
-                                        onChange={(e) => setData('email', e.target.value)}
-                                        placeholder="name@example.com"
-                                    />
-                                </div>
-
+                        <form onSubmit={submit} className="space-y-6">
+                            {/* Email Field */}
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-slate-300 flex items-center gap-2" htmlFor="email">
+                                    <Mail className="w-4 h-4 text-blue-400" /> Email Address
+                                </label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    value={data.email}
+                                    className="w-full bg-[#050b1a] border border-blue-900/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                                    placeholder="name@example.com"
+                                    autoComplete="username"
+                                    onChange={(e) => setData('email', e.target.value)}
+                                />
                                 <InputError message={errors.email} className="mt-2" />
                             </div>
 
                             {/* Password Field */}
-                            <div>
+                            <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                    <InputLabel htmlFor="password" value="Password" className="text-slate-700 font-medium mb-1" />
-                                    {canResetPassword && (
+                                    <label className="text-sm font-medium text-slate-300 flex items-center gap-2" htmlFor="password">
+                                        <Lock className="w-4 h-4 text-blue-400" /> Password
+                                    </label>
+                                    { /* canResetPassword && (
                                         <Link
                                             href={route('password.request')}
-                                            className="text-xs text-indigo-600 hover:text-indigo-500 font-medium underline-offset-4 hover:underline"
+                                            className="text-xs text-blue-400 hover:text-cyan-400 transition-colors"
                                         >
-                                            Forgot password?
+                                            Forgot?
                                         </Link>
-                                    )}
+                                    ) */}
                                 </div>
-                                <TextInput
+                                <input
                                     id="password"
                                     type="password"
-                                    name="password"
                                     value={data.password}
-                                    className="mt-1 block w-full border-slate-200 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg"
+                                    className="w-full bg-[#050b1a] border border-blue-900/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                                    placeholder="••••••••"
                                     autoComplete="current-password"
                                     onChange={(e) => setData('password', e.target.value)}
-                                    placeholder="••••••••"
                                 />
                                 <InputError message={errors.password} className="mt-2" />
                             </div>
 
                             {/* Remember Me */}
-                            <div className="block">
-                                <label className="flex items-center cursor-pointer group">
-                                    <Checkbox
-                                        name="remember"
-                                        checked={data.remember}
-                                        onChange={(e) => setData('remember', e.target.checked)}
-                                        className="rounded border-slate-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                                    />
-                                    <span className="ms-2 text-sm text-slate-600 group-hover:text-slate-900 transition-colors">
-                                        Keep me logged in
-                                    </span>
-                                </label>
+                            <div className="flex items-center">
+                                <Checkbox
+                                    name="remember"
+                                    checked={data.remember}
+                                    onChange={(e) => setData('remember', e.target.checked)}
+                                    className="border-blue-900 bg-[#050b1a] text-blue-600 focus:ring-blue-500"
+                                />
+                                <span className="ms-2 text-sm text-slate-400">Remember my session</span>
                             </div>
 
                             {/* Submit Button */}
-                            <div className="pt-2">
-                                <PrimaryButton
-                                    className="w-full justify-center py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-lg shadow-indigo-100 transition-all active:scale-[0.98]"
-                                    disabled={processing}
-                                >
-                                    {processing ? 'Signing in...' : 'Sign In'}
-                                </PrimaryButton>
-                            </div>
+                            <button
+                                disabled={processing}
+                                className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_-10px_rgba(37,99,235,0.5)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {processing ? (
+                                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                ) : (
+                                    <>
+                                        Log in <ArrowRight className="w-4 h-4" />
+                                    </>
+                                )}
+                            </button>
                         </form>
 
-                        {/* Register Link */}
-                        <div className="mt-8 text-center border-t border-slate-50 pt-6">
-                            <p className="text-sm text-slate-500">
-                                Don't have an account?{' '}
-                                <Link href={route('register')} className="text-indigo-600 font-bold hover:text-indigo-500">
-                                    Sign up
-                                </Link>
-                            </p>
+                        <div className="mt-8 text-center text-sm text-slate-500">
+                            Don't have an account?{' '}
+                            <Link href={route('register')} className="text-blue-400 font-semibold hover:underline">
+                                Sign up
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
-        </GuestLayout>
+
+            <p className="mt-8 text-slate-600 text-xs uppercase tracking-widest">
+                LogicQuest v1.0
+            </p>
+        </div>
     );
 }
