@@ -1,24 +1,12 @@
-import { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 
 const Zap = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
 );
 
-const Sun = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
-);
-
-const Moon = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
-);
-
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
-    const [isDark, setIsDark] = useState(true);
-    const toggleTheme = () => setIsDark(!isDark);
-
     return (
-        <div className={`${isDark ? 'dark' : ''} transition-colors duration-300`}>
+        <div className="dark">
             <Head title="Welcome" />
 
             <style>{`
@@ -52,23 +40,20 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 {/* Background Glows */}
                 <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[hsl(var(--primary)/0.12)] rounded-full blur-[120px] -z-0" />
 
-                {/* HEADER: Original Positioning (Logo Left, Nav Right) */}
+                {/* HEADER */}
                 <header className="relative z-10 flex items-center justify-between px-6 py-5 md:px-12 w-full max-w-7xl mx-auto">
                     {/* Logo on the Left */}
                     <div className="flex items-center gap-2">
-                        <span className="text-lg font-bold tracking-tight">LogicQuest</span>
+                        <img
+                            src="/images/LQ_logo.png"
+                            alt="LogicQuest Logo"
+                            className="h-12 w-auto brightness-150 contrast-125"
+                        />
+                        <span className="text-lg font-bold tracking-tight text-white">LogicQuest</span>
                     </div>
 
                     {/* Navigation on the Right */}
                     <nav className="flex items-center gap-2 md:gap-4">
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 mr-2 rounded-full hover:bg-[hsl(var(--foreground)/0.1)] transition-colors"
-                            aria-label="Toggle Theme"
-                        >
-                            {isDark ? <Sun className="w-5 h-5 text-blue-300" /> : <Moon className="w-5 h-5 text-blue-600" />}
-                        </button>
-
                         {auth.user ? (
                             <Link
                                 href={route('dashboard')}
@@ -80,7 +65,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             <>
                                 <Link
                                     href={route('login')}
-                                    className="rounded-xl px-5 py-2.5 text-sm font-semibold hover:bg-[hsl(var(--foreground)/0.05)] transition-all"
+                                    className="rounded-xl px-5 py-2.5 text-sm font-semibold text-[hsl(var(--foreground))] hover:bg-[hsl(var(--foreground)/0.05)] transition-all"
                                 >
                                     Log in
                                 </Link>
