@@ -40,7 +40,6 @@ export default function GuestLayout({ children }) {
                     </span>
                 </Link>
 
-                {/* Note: Toggle button is removed from here, but the logic lives on! */}
             </div>
 
             <div className="relative z-10 mt-6 w-full px-6 py-4 sm:max-w-md">
