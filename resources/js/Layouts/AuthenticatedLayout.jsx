@@ -7,20 +7,23 @@ import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
-
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
+    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
         <div className="min-h-screen bg-[#050b1a]">
-            {/* Navigation Bar */}
             <nav className="border-b border-blue-900/30 bg-[#050b1a]">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
+
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-blue-500" />
+                                <Link href="/dashboard" className="flex items-center gap-2 group">
+                                    <img
+                                        src="/images/LQ_logo.png"
+                                        alt="LogicQuest Logo"
+                                        className="h-9 w-auto brightness-150 contrast-125 transition-transform group-hover:scale-105"
+                                    />
+
                                 </Link>
                             </div>
 
@@ -28,7 +31,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
-                                    className="text-gray-300 hover:text-white"
+                                    className="hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"
                                 >
                                     Dashboard
                                 </NavLink>

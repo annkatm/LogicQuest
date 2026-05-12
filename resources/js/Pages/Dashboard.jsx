@@ -18,9 +18,7 @@ export default function Dashboard({ auth }) {
     ];
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-        >
+        <AuthenticatedLayout user={auth.user}>
             <Head title="Dashboard" />
 
             <div className="relative min-h-screen bg-[#050b1a] text-slate-200 overflow-hidden font-sans">
@@ -30,14 +28,14 @@ export default function Dashboard({ auth }) {
                     <div className="absolute top-1/3 -right-40 w-[520px] h-[520px] rounded-full bg-cyan-500/5 blur-[100px]" />
                 </div>
 
-                <main className="relative z-10 max-w-6xl mx-auto px-6 py-10 md:px-12 space-y-10">
-                    {/* Hero header */}
+                <main className="relative z-10 max-w-6xl mx-auto px-6 py-12 md:px-12 space-y-10">
                     <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                         <div>
-                            <h1 className="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
-                                Welcome back
+                            {/* Updated Welcome Text */}
+                            <h1 className="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-white via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                                Welcome back, {auth.user.name.split(' ')[0]}!
                             </h1>
-                            <p className="text-slate-400 mt-2 max-w-lg">
+                            <p className="text-slate-400 mt-2">
                                 One question. One minute. Climb the board and keep your streak alive.
                             </p>
                         </div>
