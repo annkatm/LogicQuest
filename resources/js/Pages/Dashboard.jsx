@@ -36,7 +36,7 @@ export default function Dashboard({ auth }) {
                                 Welcome back, {auth.user.name.split(' ')[0]}!
                             </h1>
                             <p className="text-slate-400 mt-2">
-                                One question. One minute. Climb the board and keep your streak alive.
+                                Three daily challenges. Sharpen your mind, climb the board, and keep your streak alive.
                             </p>
                         </div>
                     </header>
@@ -88,7 +88,7 @@ export default function Dashboard({ auth }) {
                             </div>
 
                             <Link
-                                href={route('dashboard')}
+                                href={route('leaderboard')}
                                 className="mt-6 flex items-center justify-between w-full px-4 py-3 rounded-xl bg-slate-900/50 text-slate-400 text-sm font-semibold hover:text-white hover:bg-slate-800 transition-all group"
                             >
                                 View full leaderboard

@@ -29,11 +29,11 @@ export default function AuthenticatedLayout({ header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
+                                    href={route().current('leaderboard') ? route('leaderboard') : route().current('profile.edit') ? route('profile.edit') : route('dashboard')}
+                                    active={true}
                                     className="hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"
                                 >
-                                    Dashboard
+                                    {route().current('leaderboard') ? 'Leaderboard' : route().current('profile.edit') ? 'Profile' : 'Dashboard'}
                                 </NavLink>
                             </div>
                         </div>
@@ -66,6 +66,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        <Dropdown.Link href={route('dashboard')}>
+                                            Dashboard
+                                        </Dropdown.Link>
+                                        <Dropdown.Link href={route('leaderboard')}>
+                                            Leaderboard
+                                        </Dropdown.Link>
                                         <Dropdown.Link href={route('profile.edit')}>
                                             Profile
                                         </Dropdown.Link>
@@ -108,14 +114,13 @@ export default function AuthenticatedLayout({ header, children }) {
                     </div>
                 </div>
 
-                {/* Mobile Menu */}
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route().current('leaderboard') ? route('leaderboard') : route().current('profile.edit') ? route('profile.edit') : route('dashboard')}
+                            active={true}
                         >
-                            Dashboard
+                            {route().current('leaderboard') ? 'Leaderboard' : route().current('profile.edit') ? 'Profile' : 'Dashboard'}
                         </ResponsiveNavLink>
                     </div>
 
@@ -126,7 +131,9 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
+                            <ResponsiveNavLink href={route('dashboard')}>Dashboard</ResponsiveNavLink>
                             <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('leaderboard')}>Leaderboard</ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
                                 Log Out
                             </ResponsiveNavLink>
