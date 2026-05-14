@@ -37,6 +37,17 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
             <div className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))] relative overflow-hidden font-sans">
 
+                {/* Grid Pattern Background */}
+                <div 
+                    className="absolute inset-0 z-0 pointer-events-none" 
+                    style={{ 
+                        backgroundImage: 'linear-gradient(to right, hsl(var(--foreground) / 0.05) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground) / 0.05) 1px, transparent 1px)', 
+                        backgroundSize: '48px 48px',
+                        maskImage: 'radial-gradient(ellipse at top, black 20%, transparent 70%)',
+                        WebkitMaskImage: 'radial-gradient(ellipse at top, black 20%, transparent 70%)'
+                    }} 
+                />
+
                 {/* Background Glows */}
                 <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[hsl(var(--primary)/0.12)] rounded-full blur-[120px] -z-0" />
 
