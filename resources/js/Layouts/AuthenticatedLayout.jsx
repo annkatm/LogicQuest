@@ -10,9 +10,9 @@ export default function AuthenticatedLayout({ header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-[#050b1a]">
+        <div className="min-h-screen bg-[#050b1a] flex flex-col">
             <nav className="border-b border-blue-900/30 bg-[#050b1a]">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
 
@@ -23,7 +23,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         alt="LogicQuest Logo"
                                         className="h-9 w-auto brightness-150 contrast-125 transition-transform group-hover:scale-105"
                                     />
-
+                                    <span className="text-sm font-bold tracking-tight text-white hidden md:block">LogicQuest</span>
                                 </Link>
                             </div>
 
@@ -153,6 +153,12 @@ export default function AuthenticatedLayout({ header, children }) {
 
             {/* Content Area */}
             <main>{children}</main>
+
+            {/* Footer */}
+            <footer className="relative z-10 text-center pt-8 pb-10 text-slate-500 text-xs font-medium uppercase tracking-[0.2em]">
+                © 2026 LogicQuest
+            </footer>
+
         </div>
     );
 }

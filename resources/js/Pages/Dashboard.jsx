@@ -21,7 +21,7 @@ export default function Dashboard({ auth }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Dashboard" />
 
-            <div className="relative min-h-screen bg-[#050b1a] text-slate-200 overflow-hidden font-sans">
+            <div className="relative h-full bg-[#050b1a] text-slate-200 overflow-hidden font-sans">
                 {/* Ambient background glow */}
                 <div className="pointer-events-none absolute inset-0 -z-0">
                     <div className="absolute -top-40 -left-32 w-[480px] h-[480px] rounded-full bg-blue-600/10 blur-[120px]" />
@@ -58,7 +58,7 @@ export default function Dashboard({ auth }) {
                         </div>
 
                         {/* Leaderboard Section - Standard Tailwind Card */}
-                        <div className="bg-[#0a101f] border border-blue-900/30 rounded-3xl p-6 shadow-2xl flex flex-col">
+                        <div className="bg-[#0a101f] border border-blue-900/30 rounded-3xl p-6 pb-8 shadow-2xl flex flex-col">
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-bold text-white">Leaderboard</h3>
                                 <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>

@@ -20,7 +20,7 @@ export default function Leaderboard({ auth }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Leaderboard" />
 
-            <div className="relative min-h-screen bg-[#050b1a] text-slate-200 overflow-hidden font-sans">
+            <div className="relative h-full bg-[#050b1a] text-slate-200 overflow-hidden font-sans">
                 {/* Ambient background glow */}
                 <div className="pointer-events-none absolute inset-0 -z-0">
                     <div className="absolute -top-40 -left-32 w-[480px] h-[480px] rounded-full bg-blue-600/10 blur-[120px]" />

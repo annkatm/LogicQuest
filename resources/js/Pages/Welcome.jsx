@@ -3,6 +3,12 @@ import { Head, Link } from '@inertiajs/react';
 const Zap = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
 );
+const Trophy = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+);
+const Target = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+);
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
@@ -38,14 +44,14 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             <div className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))] relative overflow-hidden font-sans">
 
                 {/* Grid Pattern Background */}
-                <div 
-                    className="absolute inset-0 z-0 pointer-events-none" 
-                    style={{ 
-                        backgroundImage: 'linear-gradient(to right, hsl(var(--foreground) / 0.05) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground) / 0.05) 1px, transparent 1px)', 
+                <div
+                    className="absolute inset-0 z-0 pointer-events-none"
+                    style={{
+                        backgroundImage: 'linear-gradient(to right, hsl(var(--foreground) / 0.05) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground) / 0.05) 1px, transparent 1px)',
                         backgroundSize: '48px 48px',
                         maskImage: 'radial-gradient(ellipse at top, black 20%, transparent 70%)',
                         WebkitMaskImage: 'radial-gradient(ellipse at top, black 20%, transparent 70%)'
-                    }} 
+                    }}
                 />
 
                 {/* Background Glows */}
@@ -68,7 +74,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         {auth.user ? (
                             <Link
                                 href={route('dashboard')}
-                                className="rounded-xl px-5 py-2.5 bg-gradient-hero text-white font-semibold shadow-glow hover:brightness-110 transition-all text-sm"
+                                className="rounded-xl px-5 py-2.5 bg-gradient-hero text-white font-semibold shadow-glow hover:brightness-110 hover:scale-105 active:scale-95 transition-all text-sm"
                             >
                                 Dashboard
                             </Link>
@@ -82,7 +88,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                 </Link>
                                 <Link
                                     href={route('register')}
-                                    className="rounded-xl px-5 py-2.5 bg-gradient-hero text-white font-semibold shadow-glow hover:brightness-110 transition-all text-sm"
+                                    className="rounded-xl px-5 py-2.5 bg-gradient-hero text-white font-semibold shadow-glow hover:brightness-110 hover:scale-105 active:scale-95 transition-all text-sm"
                                 >
                                     Register
                                 </Link>
@@ -92,15 +98,54 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 </header>
 
                 {/* Hero Section */}
-                <main className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-32 pb-20 mt-10 md:mt-20">
+                <main className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-16 pb-20 mt-10 md:mt-20">
                     <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-[hsl(var(--foreground))]">
                         Engage Your Logic. <br className="hidden md:block" />
                         <span className="text-gradient">Master the Quest</span>
                     </h1>
                     <p className="text-lg md:text-xl text-[hsl(var(--foreground)/0.7)] max-w-2xl leading-relaxed">
-                        A new way to engage at work. Tackle the daily logic quest, secure your base score, and race for the speed bonus.
+                        A new way to engage at work. Conquer daily logic challenges, secure your base score, and race the clock for a speed bonus.
                     </p>
+                    {/* CALL TO ACTION BUTTONS */}
+                    <div className="flex flex-wrap items-center justify-center gap-4 mt-10 mb-10">
+                        <Link
+                            href={route('register')}
+                            className="rounded-2xl px-8 py-4 bg-gradient-hero text-white font-bold shadow-glow hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all text-base"
+                        >
+                            Start playing free
+                        </Link>
+                        <Link
+                            href={route('login')}
+                            className="rounded-2xl px-8 py-4 border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.3)] backdrop-blur-sm text-[hsl(var(--foreground))] font-bold hover:bg-[hsl(var(--card)/0.6)] transition-all text-base"
+                        >
+                            I have an account
+                        </Link>
+                    </div>
+
+                    {/* FEATURES GRID */}
+                    <div className="grid md:grid-cols-3 gap-6 mt-4 text-center">
+                        {[
+                            { icon: Target, title: "Daily Challenges", desc: "A fresh logic problem every 24 hours to keep your mind sharp." },
+                            { icon: Zap, title: "Speed Bonuses", desc: "The faster you solve, the higher your score. Precision meets pace." },
+                            { icon: Trophy, title: "Leaderboards", desc: "Compete with colleagues and climb the company ranks." },
+                        ].map(({ icon: Icon, title, desc }) => (
+                            <div key={title} className="bg-[hsl(var(--card)/0.4)] backdrop-blur-md border border-[hsl(var(--border))] rounded-3xl p-8 hover:border-[hsl(var(--primary)/0.5)] transition-all duration-300 flex flex-col items-center">
+                                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(59,130,246,0.08)]">
+                                    <Icon className="w-6 h-6 text-[hsl(var(--accent))]" />
+                                </div>
+                                <h3 className="text-lg font-bold mb-3 tracking-wide text-white uppercase">{title}</h3>
+                                <p className="text-sm text-slate-400 leading-relaxed max-w-[200px] mx-auto">
+                                    {desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
                 </main>
+
+                {/* FOOTER-LIKE INFO */}
+                <footer className="relative z-10 text-center pb-10 text-[hsl(var(--foreground)/0.3)] text-xs font-medium uppercase tracking-[0.2em]">
+                    © 2026 LogicQuest — Built for the curious
+                </footer>
             </div>
         </div>
     );

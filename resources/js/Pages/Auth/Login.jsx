@@ -93,7 +93,7 @@ export default function Login({ status, canResetPassword }) {
 
                         <button
                             disabled={processing}
-                            className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-xl shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                            className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-xl shadow-lg hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                         >
                             {processing ? (
                                 <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
