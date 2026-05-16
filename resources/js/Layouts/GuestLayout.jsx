@@ -1,26 +1,9 @@
 import { Link } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
 
 export default function GuestLayout({ children }) {
-    // Keep the state logic so the Dashboard can use it later
-    const [isDark, setIsDark] = useState(() => {
-        // Default to dark, but check if a preference already exists
-        return localStorage.getItem('theme') !== 'light';
-    });
-
-    useEffect(() => {
-        // This ensures the 'dark' class is applied to the HTML tag
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-    }, [isDark]);
-
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-[#050b1a] flex flex-col relative overflow-hidden transition-colors duration-300 font-sans">
+        <div className="dark">
+            <div className="min-h-screen bg-[#050b1a] flex flex-col relative overflow-hidden font-sans">
             {/* Grid Pattern Background */}
             <div
                 className="absolute inset-0 z-0 pointer-events-none text-black/5 dark:text-white/5"
@@ -43,7 +26,7 @@ export default function GuestLayout({ children }) {
                         alt="LogicQuest Logo"
                         className="h-12 w-auto brightness-150 contrast-125 transition-transform group-hover:scale-105"
                     />
-                    <span className="text-lg font-bold tracking-tight text-white">
+                    <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white transition-colors duration-300">
                         LogicQuest
                     </span>
                 </Link>
@@ -57,9 +40,10 @@ export default function GuestLayout({ children }) {
             </main>
 
             {/* Footer */}
-            <footer className="relative z-10 text-center pb-10 text-slate-500 text-xs font-medium uppercase tracking-[0.2em]">
+            <footer className="relative z-10 text-center pb-10 text-slate-400 dark:text-slate-500 text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-300">
                 © 2026 LogicQuest
             </footer>
+        </div>
         </div>
     );
 }

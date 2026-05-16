@@ -66,7 +66,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             alt="LogicQuest Logo"
                             className="h-12 w-auto brightness-150 contrast-125"
                         />
-                        <span className="text-lg font-bold tracking-tight text-white">LogicQuest</span>
+                        <span className="text-lg font-bold tracking-tight text-[hsl(var(--foreground))] transition-colors duration-300">LogicQuest</span>
                     </div>
 
                     {/* Navigation on the Right */}
@@ -74,7 +74,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         {auth.user ? (
                             <Link
                                 href={route('dashboard')}
-                                className="rounded-xl px-5 py-2.5 bg-gradient-hero text-white font-semibold shadow-glow hover:brightness-110 hover:scale-105 active:scale-95 transition-all text-sm"
+                                className="rounded-xl px-5 py-2.5 bg-gradient-hero text-white font-semibold shadow-glow hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-300 text-sm"
                             >
                                 Dashboard
                             </Link>
@@ -82,13 +82,13 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             <>
                                 <Link
                                     href={route('login')}
-                                    className="rounded-xl px-5 py-2.5 text-sm font-semibold text-[hsl(var(--foreground))] hover:bg-[hsl(var(--foreground)/0.05)] transition-all"
+                                    className="rounded-xl px-5 py-2.5 text-sm font-semibold text-[hsl(var(--foreground))] hover:bg-[hsl(var(--foreground)/0.1)] hover:text-white transition-all duration-300"
                                 >
                                     Log in
                                 </Link>
                                 <Link
                                     href={route('register')}
-                                    className="rounded-xl px-5 py-2.5 bg-gradient-hero text-white font-semibold shadow-glow hover:brightness-110 hover:scale-105 active:scale-95 transition-all text-sm"
+                                    className="rounded-xl px-5 py-2.5 bg-gradient-hero text-white font-semibold shadow-glow hover:brightness-110 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-300 text-sm"
                                 >
                                     Register
                                 </Link>
@@ -110,13 +110,13 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     <div className="flex flex-wrap items-center justify-center gap-4 mt-10 mb-10">
                         <Link
                             href={route('register')}
-                            className="rounded-2xl px-8 py-4 bg-gradient-hero text-white font-bold shadow-glow hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all text-base"
+                            className="rounded-2xl px-8 py-4 bg-gradient-hero text-white font-bold shadow-glow hover:brightness-110 hover:-translate-y-1 active:translate-y-0 active:scale-[0.98] transition-all duration-300 text-base"
                         >
                             Start playing free
                         </Link>
                         <Link
                             href={route('login')}
-                            className="rounded-2xl px-8 py-4 border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.3)] backdrop-blur-sm text-[hsl(var(--foreground))] font-bold hover:bg-[hsl(var(--card)/0.6)] transition-all text-base"
+                            className="rounded-2xl px-8 py-4 border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.3)] backdrop-blur-sm text-[hsl(var(--foreground))] font-bold hover:bg-[hsl(var(--card)/0.6)] hover:-translate-y-1 active:translate-y-0 active:scale-[0.98] transition-all duration-300 text-base"
                         >
                             I have an account
                         </Link>
@@ -129,12 +129,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             { icon: Zap, title: "Speed Bonuses", desc: "The faster you solve, the higher your score. Precision meets pace." },
                             { icon: Trophy, title: "Leaderboards", desc: "Compete with colleagues and climb the company ranks." },
                         ].map(({ icon: Icon, title, desc }) => (
-                            <div key={title} className="bg-[hsl(var(--card)/0.4)] backdrop-blur-md border border-[hsl(var(--border))] rounded-3xl p-8 hover:border-[hsl(var(--primary)/0.5)] transition-all duration-300 flex flex-col items-center">
-                                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(59,130,246,0.08)]">
+                            <div key={title} className="group bg-[hsl(var(--card)/0.4)] backdrop-blur-md border border-[hsl(var(--border))] rounded-3xl p-8 hover:border-[hsl(var(--primary)/0.5)] hover:-translate-y-1 transition-all duration-500 flex flex-col items-center cursor-default">
+                                <div className="w-12 h-12 rounded-2xl bg-[hsl(var(--primary)/0.1)] flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(59,130,246,0.08)] group-hover:scale-105 transition-transform duration-500">
                                     <Icon className="w-6 h-6 text-[hsl(var(--accent))]" />
                                 </div>
-                                <h3 className="text-lg font-bold mb-3 tracking-wide text-white uppercase">{title}</h3>
-                                <p className="text-sm text-slate-400 leading-relaxed max-w-[200px] mx-auto">
+                                <h3 className="text-lg font-bold mb-3 tracking-wide text-[hsl(var(--foreground))] uppercase transition-colors duration-300">{title}</h3>
+                                <p className="text-sm text-[hsl(var(--foreground)/0.6)] leading-relaxed max-w-[200px] mx-auto transition-colors duration-300 group-hover:text-[hsl(var(--foreground)/0.8)]">
                                     {desc}
                                 </p>
                             </div>

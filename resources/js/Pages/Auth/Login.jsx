@@ -2,6 +2,7 @@ import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useState } from 'react';
 
 const Lock = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -15,7 +16,16 @@ const ArrowRight = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
 );
 
+const Eye = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
+);
+
+const EyeOff = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" /><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" /><path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" /><line x1="2" x2="22" y1="2" y2="22" /></svg>
+);
+
 export default function Login({ status, canResetPassword }) {
+    const [showPassword, setShowPassword] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -39,7 +49,6 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             )}
 
-            {/* The Login Card - Fixed to Dark Style */}
             <div className="p-[1px] rounded-3xl bg-gradient-to-b from-blue-500/30 to-transparent shadow-2xl">
                 <div className="bg-[#0a101f] border border-blue-900/30 rounded-[calc(1.5rem-1px)] p-8">
 
@@ -49,7 +58,6 @@ export default function Login({ status, canResetPassword }) {
                     </div>
 
                     <form onSubmit={submit} className="space-y-6">
-                        {/* Email Field */}
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-300 flex items-center gap-2" htmlFor="email">
                                 <Mail className="w-4 h-4 text-blue-400" /> Email Address
@@ -65,19 +73,36 @@ export default function Login({ status, canResetPassword }) {
                             <InputError message={errors.email} />
                         </div>
 
-                        {/* Password Field */}
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-300 flex items-center gap-2" htmlFor="password">
                                 <Lock className="w-4 h-4 text-blue-400" /> Password
                             </label>
-                            <input
-                                id="password"
-                                type="password"
-                                value={data.password}
-                                className="w-full bg-[#050b1a] border border-blue-900/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
-                                placeholder="••••••••"
-                                onChange={(e) => setData('password', e.target.value)}
-                            />
+
+                            <div className="relative group">
+                                <input
+                                    id="password"
+                                    // 2. Dynamically change type
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={data.password}
+                                    // 3. Added 'pr-12' to make room for the button
+                                    className="w-full bg-[#050b1a] border border-blue-900/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all pr-12"
+                                    placeholder="••••••••"
+                                    onChange={(e) => setData('password', e.target.value)}
+                                />
+
+                                {/* 4. The Toggle Button */}
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-slate-500 hover:text-blue-400 transition-colors focus:outline-none"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff className="w-5 h-5" />
+                                    ) : (
+                                        <Eye className="w-5 h-5" />
+                                    )}
+                                </button>
+                            </div>
                             <InputError message={errors.password} />
                         </div>
 

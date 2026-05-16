@@ -14,7 +14,15 @@ use Inertia\Response;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Display the user's profile page (view-only stats/achievements).
+     */
+    public function show(Request $request): Response
+    {
+        return Inertia::render('Profile/Show');
+    }
+
+    /**
+     * Display the user's profile edit form.
      */
     public function edit(Request $request): Response
     {
