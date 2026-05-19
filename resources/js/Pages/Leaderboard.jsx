@@ -69,10 +69,10 @@ export default function Leaderboard({ auth }) {
             <Head title="Leaderboard" />
 
             <div className="relative min-h-screen bg-[#f8fafc] dark:bg-[#050b1a] text-slate-800 dark:text-slate-200 overflow-hidden font-sans transition-colors duration-300">
-                {/* Ambient glows — visible only in dark mode */}
-                <div className="pointer-events-none absolute inset-0 -z-0 hidden dark:block">
-                    <div className="absolute -top-40 -left-32 w-[480px] h-[480px] rounded-full bg-blue-600/10 blur-[120px]" />
-                    <div className="absolute top-1/3 -right-40 w-[520px] h-[520px] rounded-full bg-cyan-500/5 blur-[100px]" />
+                {/* Ambient background — light & dark */}
+                <div className="pointer-events-none absolute inset-0 -z-0">
+                    <div className="absolute -top-40 -left-32 w-[480px] h-[480px] rounded-full bg-indigo-100/60 dark:bg-blue-600/10 blur-[120px]" />
+                    <div className="absolute top-1/3 -right-40 w-[520px] h-[520px] rounded-full bg-blue-100/40 dark:bg-cyan-500/5 blur-[100px]" />
                 </div>
 
                 <main className="relative z-10 max-w-4xl mx-auto px-6 py-12 md:px-12 space-y-8">
@@ -120,7 +120,7 @@ export default function Leaderboard({ auth }) {
                     </div>
 
                     {/* Full Table */}
-                    <div className="bg-white dark:bg-[#0a101f] border border-slate-200/60 dark:border-blue-900/30 rounded-3xl p-6 md:p-8 shadow-sm dark:shadow-2xl flex flex-col transition-colors duration-300">
+                    <div className="bg-white dark:bg-[#0a101f] border border-slate-200 dark:border-blue-900/30 rounded-3xl p-6 md:p-8 shadow-md dark:shadow-2xl flex flex-col transition-colors duration-300">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-xl font-bold text-slate-900 dark:text-white transition-colors duration-300">All Performers</h3>
                         </div>

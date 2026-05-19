@@ -2,12 +2,44 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { Link, usePage, router } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [isDark, setIsDark] = useState(user.theme !== 'light');
+
+    // Force DOM to match user's stored preference on every mount/navigation,
+    // overriding any system/browser setting.
+    useEffect(() => {
+        if (user.theme === 'light') {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        }
+        setIsDark(user.theme !== 'light');
+    }, [user.theme]);
+
+    const toggleTheme = () => {
+        const newTheme = isDark ? 'light' : 'dark';
+        setIsDark(!isDark);
+        
+        if (newTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+
+        router.patch(route('profile.theme.update'), { theme: newTheme }, {
+            preserveScroll: true,
+            preserveState: true,
+        });
+    };
 
     const initials = user.name
         .split(' ')
@@ -92,7 +124,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
                         </div>
 
-                        {/* Hamburger for mobile */}
                         <div className="-me-2 flex items-center sm:hidden">
                             <button
                                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}

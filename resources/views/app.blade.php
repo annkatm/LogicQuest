@@ -18,7 +18,9 @@
 
         <!-- Dark Mode Init -->
         <script>
-            if (localStorage.getItem('theme') === 'light') {
+            const userTheme = @json(auth()->check() ? auth()->user()->theme : 'dark');
+            localStorage.setItem('theme', userTheme);
+            if (userTheme === 'light') {
                 document.documentElement.classList.remove('dark');
             } else {
                 document.documentElement.classList.add('dark');

@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, usePage } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
+import { Head, Link, usePage, router } from '@inertiajs/react';
+import { useState } from 'react';
 
 function StatCard({ label, value, icon, color = 'blue' }) {
     const accent = {
@@ -10,9 +10,9 @@ function StatCard({ label, value, icon, color = 'blue' }) {
         purple: 'dark:border-purple-900/30 dark:hover:border-purple-500/40 hover:border-purple-300',
     };
     return (
-        <div className={`bg-white dark:bg-[#0a101f] border border-slate-200/60 shadow-sm hover:shadow-md hover:-translate-y-1 ${accent[color]} rounded-2xl p-6 transition-all duration-300 dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.08)]`}>
+        <div className={`bg-white dark:bg-[#0a101f] border border-slate-200 dark:border-blue-900/30 shadow-md hover:shadow-lg hover:-translate-y-1 ${accent[color]} rounded-2xl p-6 transition-all duration-300`}>
             <span className="text-2xl mb-3 block">{icon}</span>
-            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">{label}</p>
+            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">{label}</p>
             <p className="text-slate-900 dark:text-white text-2xl font-bold mt-1 transition-colors duration-300">{value}</p>
         </div>
     );
@@ -40,22 +40,23 @@ function Badge({ title, icon, glow, locked = false }) {
 
 export default function Show() {
     const { auth } = usePage().props;
-    const [isDark, setIsDark] = useState(() => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('theme') !== 'light';
-        }
-        return true;
-    });
+    const [isDark, setIsDark] = useState(auth.user.theme !== 'light');
 
-    useEffect(() => {
-        if (isDark) {
+    const toggleTheme = () => {
+        const newTheme = isDark ? 'light' : 'dark';
+        setIsDark(!isDark);
+        if (newTheme === 'dark') {
             document.documentElement.classList.add('dark');
             localStorage.setItem('theme', 'dark');
         } else {
             document.documentElement.classList.remove('dark');
             localStorage.setItem('theme', 'light');
         }
-    }, [isDark]);
+        router.patch(route('profile.theme.update'), { theme: newTheme }, {
+            preserveScroll: true,
+            preserveState: true,
+        });
+    };
 
     const initials = auth.user.name
         .split(' ')
@@ -73,7 +74,7 @@ export default function Show() {
 
                     {/* LEFT: Identity Card */}
                     <div className="w-full md:w-1/3">
-                        <div className="bg-white dark:bg-[#0a101f] border border-slate-200/60 dark:border-blue-900/30 rounded-3xl p-8 sticky top-24 shadow-sm dark:shadow-2xl transition-colors duration-300">
+                        <div className="bg-white dark:bg-[#0a101f] border border-slate-200 dark:border-blue-900/30 rounded-3xl p-8 sticky top-24 shadow-md dark:shadow-2xl transition-colors duration-300">
                             <div className="flex flex-col items-center text-center">
                                 {/* Avatar */}
                                 <div className="w-28 h-28 rounded-full border-2 border-blue-500 p-1 shadow-[0_0_25px_rgba(59,130,246,0.35)] bg-gradient-to-br from-blue-600 to-cyan-400 flex items-center justify-center select-none">
@@ -120,7 +121,7 @@ export default function Show() {
                         </div>
 
                         {/* Achievement Gallery */}
-                        <div className="bg-white dark:bg-[#0a101f] border border-slate-200/60 dark:border-blue-900/30 rounded-3xl p-8 shadow-sm transition-colors duration-300">
+                        <div className="bg-white dark:bg-[#0a101f] border border-slate-200 dark:border-blue-900/30 rounded-3xl p-8 shadow-md transition-colors duration-300">
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-slate-900 dark:text-white font-bold text-lg uppercase tracking-wider transition-colors duration-300">Achievement Gallery</h3>
                                 <span className="text-xs text-slate-500 font-mono">3 / 12 UNLOCKED</span>
@@ -136,11 +137,10 @@ export default function Show() {
                         </div>
 
                         {/* System Preferences */}
-                        <div className="bg-white dark:bg-[#0a101f] border border-slate-200/60 dark:border-blue-900/30 rounded-3xl p-8 shadow-sm transition-colors duration-300">
+                        <div className="bg-white dark:bg-[#0a101f] border border-slate-200 dark:border-blue-900/30 rounded-3xl p-8 shadow-md transition-colors duration-300">
                             <h3 className="text-slate-900 dark:text-white font-bold text-lg uppercase tracking-wider mb-6 transition-colors duration-300">System Preferences</h3>
 
-                            {/* Dark / Light Mode Toggle */}
-                            <div className="flex items-center justify-between p-4 bg-[#f8fafc] dark:bg-blue-900/10 rounded-2xl border border-slate-200/60 dark:border-blue-900/20 transition-colors duration-300">
+                            <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-blue-900/10 rounded-2xl border border-slate-200 dark:border-blue-900/20 transition-colors duration-300">
                                 <div>
                                     <p className="text-slate-900 dark:text-white font-bold transition-colors duration-300">
                                         {isDark ? 'Dark Mode Protocol' : 'Light Mode Protocol'}
@@ -150,7 +150,7 @@ export default function Show() {
                                     </p>
                                 </div>
                                 <button
-                                    onClick={() => setIsDark(!isDark)}
+                                    onClick={toggleTheme}
                                     className={`w-12 h-6 rounded-full relative transition-colors duration-300 ${isDark ? 'bg-blue-600' : 'bg-slate-300'}`}
                                     aria-label="Toggle dark mode"
                                 >
