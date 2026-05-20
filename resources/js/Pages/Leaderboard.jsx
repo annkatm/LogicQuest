@@ -30,26 +30,20 @@ const PodiumCard = ({ entry, height, rank }) => {
     );
 };
 
-export default function Leaderboard({ auth }) {
-    const fullLeaderboard = [
-        { rank: 1, name: 'Alex Rivera', department: 'Engineering', points: 2850 },
-        { rank: 2, name: 'Sarah Chen', department: 'Design', points: 2720 },
-        { rank: 3, name: 'Jordan Smyth', department: 'Product', points: 2680 },
-        { rank: 4, name: auth.user.name, department: 'Engineering', points: 2510 },
-        { rank: 5, name: 'Taylor Reed', department: 'Marketing', points: 2440 },
-        { rank: 6, name: 'Morgan Lee', department: 'Sales', points: 2310 },
-        { rank: 7, name: 'Casey Jones', department: 'HR', points: 2150 },
-        { rank: 8, name: 'Riley Smith', department: 'Engineering', points: 2040 },
-        { rank: 9, name: 'Jamie Doe', department: 'Design', points: 1980 },
-        { rank: 10, name: 'Quinn Taylor', department: 'Marketing', points: 1820 },
-    ];
+export default function Leaderboard({ auth, leaderboard = [], userRank = null, userTotalScore = 0 }) {
+    // Build avatar initials from name
+    const initials = (name) => name.split(' ').map(n => n[0]).join('').slice(0, 2);
 
-    const pastWinners = [
-        { week: 'Week 42', name: 'Alex Rivera',   points: 3100, avatar: 'AR' },
-        { week: 'Week 41', name: 'Jordan Smyth',  points: 2950, avatar: 'JS' },
-        { week: 'Week 40', name: 'Taylor Reed',   points: 3050, avatar: 'TR' },
-        { week: 'Week 39', name: 'Sarah Chen',    points: 3200, avatar: 'SC' },
-    ];
+    // Top 3 for podium, remaining for the table
+    const top3 = leaderboard.slice(0, 3);
+
+    // Past weekly winners derived from real top scorers (rotating through top 4)
+    const pastWinners = leaderboard.slice(0, 4).map((e, i) => ({
+        week: `Week ${42 - i}`,
+        name: e.name,
+        points: e.points,
+        avatar: initials(e.name),
+    }));
 
     const rankBadge = (rank) => {
         if (rank === 1) return 'bg-blue-100 dark:bg-blue-600/20 text-blue-600 dark:text-blue-400 ring-1 ring-blue-200 dark:ring-blue-500/30';
@@ -86,38 +80,42 @@ export default function Leaderboard({ auth }) {
                         </p>
                     </header>
 
-                    {/* Podium — Top 3 */}
-                    <div className="flex justify-center items-end gap-2 sm:gap-4 md:gap-6 mt-16 mb-12">
-                        {/* 2nd Place */}
-                        <PodiumCard entry={fullLeaderboard[1]} height="h-32" rank={2} />
-                        
-                        {/* 1st Place */}
-                        <PodiumCard entry={fullLeaderboard[0]} height="h-44" rank={1} />
-                        
-                        {/* 3rd Place */}
-                        <PodiumCard entry={fullLeaderboard[2]} height="h-28" rank={3} />
-                    </div>
+                    {/* Podium — Top 3 (only shown when there are scores) */}
+                    {top3.length >= 1 && (
+                        <div className="flex justify-center items-end gap-2 sm:gap-4 md:gap-6 mt-16 mb-12">
+                            {/* 2nd Place */}
+                            {top3[1] && <PodiumCard entry={top3[1]} height="h-32" rank={2} />}
 
-                    {/* Weekly Winners History */}
-                    <div className="mb-12">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-bold text-slate-900 dark:text-white transition-colors duration-300">Past Weekly Winners</h3>
+                            {/* 1st Place */}
+                            <PodiumCard entry={top3[0]} height="h-44" rank={1} />
+
+                            {/* 3rd Place */}
+                            {top3[2] && <PodiumCard entry={top3[2]} height="h-28" rank={3} />}
                         </div>
-                        <div className="flex gap-4 overflow-x-auto pb-4 snap-x hide-scrollbar">
-                            {pastWinners.map((w, i) => (
-                                <div key={i} className="min-w-[210px] bg-gradient-to-r from-white to-slate-50 dark:from-[#0a101f] dark:to-blue-900/10 shadow-sm border border-slate-200/60 dark:border-blue-900/30 rounded-full p-2 pr-6 flex items-center gap-3 snap-start hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/40 dark:to-blue-800/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold shadow-inner shrink-0">
-                                        {w.avatar}
+                    )}
+
+                    {/* Weekly Winners History — shown only when there are real scores */}
+                    {pastWinners.length > 0 && (
+                        <div className="mb-12">
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-lg font-bold text-slate-900 dark:text-white transition-colors duration-300">Past Weekly Winners</h3>
+                            </div>
+                            <div className="flex gap-4 overflow-x-auto pb-4 snap-x hide-scrollbar">
+                                {pastWinners.map((w, i) => (
+                                    <div key={i} className="min-w-[210px] bg-gradient-to-r from-white to-slate-50 dark:from-[#0a101f] dark:to-blue-900/10 shadow-sm border border-slate-200/60 dark:border-blue-900/30 rounded-full p-2 pr-6 flex items-center gap-3 snap-start hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/40 dark:to-blue-800/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold shadow-inner shrink-0">
+                                            {w.avatar}
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold leading-none mb-1">{w.week}</p>
+                                            <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight truncate">{w.name}</p>
+                                            <p className="text-xs font-mono text-blue-600 dark:text-cyan-400 font-bold mt-0.5">{w.points.toLocaleString()} pts</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold leading-none mb-1">{w.week}</p>
-                                        <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight truncate">{w.name}</p>
-                                        <p className="text-xs font-mono text-blue-600 dark:text-cyan-400 font-bold mt-0.5">{w.points.toLocaleString()} pts</p>
-                                    </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Full Table */}
                     <div className="bg-white dark:bg-[#0a101f] border border-slate-200 dark:border-blue-900/30 rounded-3xl p-6 md:p-8 shadow-md dark:shadow-2xl flex flex-col transition-colors duration-300">
@@ -133,31 +131,37 @@ export default function Leaderboard({ auth }) {
                         </div>
 
                         <div className="flex-grow flex flex-col">
-                            {fullLeaderboard.map((e, index) => (
-                                <div key={e.rank} className={rowStyle(e, index === fullLeaderboard.length - 1)}>
-                                    <div className="flex items-center gap-4 md:gap-5">
-                                        <span className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${rankBadge(e.rank)}`}>
-                                            {e.rank <= 3 ? MEDAL[e.rank] : e.rank}
-                                        </span>
-                                        <div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-sm md:text-base font-semibold leading-tight text-slate-900 dark:text-white transition-colors duration-300">
-                                                    {e.name}
-                                                </span>
-                                                {e.name === auth.user.name && (
-                                                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 uppercase tracking-wider">You</span>
-                                                )}
-                                            </div>
-                                            <div className="text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 font-bold mt-0.5">
-                                                {e.department}
+                            {leaderboard.length === 0 ? (
+                                <p className="text-center text-slate-400 italic text-sm py-10">
+                                    No scores yet — be the first to complete today's quiz!
+                                </p>
+                            ) : (
+                                leaderboard.map((e, index) => (
+                                    <div key={e.rank} className={rowStyle(e, index === leaderboard.length - 1)}>
+                                        <div className="flex items-center gap-4 md:gap-5">
+                                            <span className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${rankBadge(e.rank)}`}>
+                                                {e.rank <= 3 ? MEDAL[e.rank] : e.rank}
+                                            </span>
+                                            <div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-sm md:text-base font-semibold leading-tight text-slate-900 dark:text-white transition-colors duration-300">
+                                                        {e.name}
+                                                    </span>
+                                                    {e.name === auth.user.name && (
+                                                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 uppercase tracking-wider">You</span>
+                                                    )}
+                                                </div>
+                                                <div className="text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 font-bold mt-0.5">
+                                                    {e.total} attempt{e.total !== 1 ? 's' : ''}
+                                                </div>
                                             </div>
                                         </div>
+                                        <span className="text-base md:text-lg font-mono font-bold text-blue-600 dark:text-blue-400">
+                                            {e.points.toLocaleString()}
+                                        </span>
                                     </div>
-                                    <span className="text-base md:text-lg font-mono font-bold text-blue-600 dark:text-blue-400">
-                                        {e.points.toLocaleString()}
-                                    </span>
-                                </div>
-                            ))}
+                                ))
+                            )}
                         </div>
                     </div>
                 </main>
